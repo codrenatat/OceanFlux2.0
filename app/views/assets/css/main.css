@@ -3327,3 +3327,29 @@ input, select, textarea {
 			}
 
 		}
+
+		/*MI STYLES*/
+		.card2 {
+			margin: 20px;
+			border: 1px solid #ccc;
+			background-color: white;
+			border-radius: 8px;
+			display: flex;
+			align-items: center;
+			max-width: 650px;
+			width: 100%;
+			height: 350px;
+		  }
+		  
+		  .card2-content {
+			flex: 1; /* Take up remaining space */
+			padding: 20px;
+		  }
+		  
+		  .card2-image-circle {
+			width: 150px;
+			height: 150px;
+			border-radius: 50%;
+			object-fit: cover;
+			margin-right: 10px; /* Add some spacing to the right of the image */
+		  }
