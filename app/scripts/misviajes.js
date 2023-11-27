@@ -94,9 +94,21 @@ function recalculateTotal() {
 
 function eliminarViaje(idViaje, total, hotelId) {
   const filaAEliminar = document.querySelector(`#tablaViajes tr[data-id="${idViaje}"]`);
-  filaAEliminar.remove();
-  recalculateTotal();
-  guardarViajesEnAlmacenamientoLocal();
+  
+  fetch(`http://localhost:3000/viajes/${idViaje}`, {
+    method: "DELETE",
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Viaje eliminado:", data);
+      
+      filaAEliminar.remove();
+      recalculateTotal();
+      guardarViajesEnAlmacenamientoLocal();
+    })
+    .catch((error) => {
+      console.error("Error al eliminar el viaje:", error);
+    });
 }
 
 function guardarViajesEnAlmacenamientoLocal() {

@@ -24,7 +24,7 @@
   
       hotelsData.forEach((hotelData, index) => {
         const col = document.createElement("div");
-        col.classList.add("col-md-4"); // Adjusted from col-md-6 to col-md-4
+        col.classList.add("col-md-4");
         row.appendChild(col);
   
         const cardHotel = document.createElement("div");
@@ -58,7 +58,7 @@
     }
   })();
   
-  
+
   async function addHotel(usuario, correo, playa, hotel, total) {
     const tile = document.createElement("div");
     try {
@@ -70,26 +70,27 @@
         body: JSON.stringify({ usuario, correo, playa, hotel, total }),
       });
       const data = await res.json();
-      console.log(data);
+  
       if (!data.errors) {
         tile.innerHTML = `
-          <div class="alert alert--success">
+          <div class="alert alert-success">
             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
             <strong>Bien!</strong> Tu reservación se ha realizado con éxito
           </div>
         `;
       } else {
         tile.innerHTML = `
-          <div class="alert alert--danger">
+          <div class="alert alert-danger">
             <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
             <strong>Oops!</strong> Hemos tenido un problema para agendar la reservación
           </div>
         `;
       }
+  
       document.body.appendChild(tile);
     } catch (error) {
       tile.innerHTML = `
-        <div class="alert alert--danger">
+        <div class="alert alert-danger">
           <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
           <strong>Oops!</strong> Hemos tenido un problema para agendar la reservación
         </div>
@@ -98,4 +99,5 @@
       console.error("ERROR!!!", JSON.stringify(error));
     }
   }
+  
   

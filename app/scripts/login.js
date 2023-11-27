@@ -115,4 +115,4 @@ function mostrarAlerta(type, message) {
     `;
 
     alertContainer.appendChild(alertElement);
-}
+} 

@@ -49,24 +49,33 @@
 					<div id="main">
 						<div class="inner">
 							<h1>Log In</h1>
-							<!--<span class="image main"><img src="images/pic13.jpg" alt="" /></span>-->
 							<section>
                                 <form method="post" action="#">
                                     <div class="row gtr-uniform">
                                         <div class="col-12">
-                                            <input type="text" name="demo-name" id="demo-name" value="" placeholder="Username" />
+                                            <input type="text" class="form-control" id="usuario" placeholder="Username" />
                                         </div>
                                         <div class="col-12">
-                                            <input type="email" name="demo-email" id="demo-email" value="" placeholder="Email" />
+                                            <input type="password" class="form-control" id="password" placeholder="Password" />
                                         </div>
                                         <div class="col-12">
                                             <a href="register.html">If you don't have an account click here</a>
                                         </div>
                                         <div class="col-12">
                                             <ul class="actions">
-                                                <li><input type="submit" value="LogIn" class="primary" /></li>
-                                                <li><input type="reset" value="LogOut" /></li>
-                                            </ul>
+												<li>
+													<input type="submit" value="LogIn" class="primary" onclick="iniciarSesion()" />
+												</li>
+												<li>
+													<div id="loadingSpinner" class="spinner-border text-success" role="status" style="display: none;">
+														<span class="sr-only">Loading...</span>
+													</div>
+												</li>
+												<li>
+													<input id="logoutButton" type="reset" value="LogOut" onclick="cerrarSesion()" />
+												</li>
+											</ul>
+											
                                         </div>
                                     </div>
                                 </form>
@@ -99,6 +108,7 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+			<script src="../scripts/login.js"></script>
 
 	</body>
 </html>

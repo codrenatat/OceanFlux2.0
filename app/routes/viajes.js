@@ -28,4 +28,19 @@ router.post("/viajes", async (req, res) => {
   }
 });
 
+router.delete("/viajes/:id", async (req, res) => {
+  try {
+    const viajeId = req.params.id;
+    const deletedViaje = await viajesModel.findByIdAndDelete(viajeId);
+
+    if (!deletedViaje) {
+      return res.status(404).send("Viaje not found");
+    }
+
+    res.status(200).json(deletedViaje);
+  } catch (error) {
+    res.status(500).send("Error deleting viaje");
+  }
+});
+
 module.exports = router;
