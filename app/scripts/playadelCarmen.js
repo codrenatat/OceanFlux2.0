@@ -1,34 +1,60 @@
 (async () => {
   const contenedorHoteles = document.getElementById("contenedor-hoteles");
   contenedorHoteles.innerHTML = "";
-  try {
-    const res = await fetch("http://localhost:3000/hotels");
-    const data = await res.json();
 
-    data[0].hoteles.forEach((hotel) => {
+  try {
+    const res = await fetch("http://localhost:3000/hotels/PlayadelCarmen");
+    const hotelsData = await res.json();
+
+    if (hotelsData.length === 0) {
+      const container = document.createElement("div");
+      container.classList.add("error");
+      container.innerHTML = "No hotels to show";
+      contenedorHoteles.appendChild(container);
+      return;
+    }
+
+    const container = document.createElement("div");
+    container.classList.add("container");
+    contenedorHoteles.appendChild(container);
+
+    const row = document.createElement("div");
+    row.classList.add("row");
+    container.appendChild(row);
+
+    hotelsData.forEach((hotelData, index) => {
+      const col = document.createElement("div");
+      col.classList.add("col-md-6");
+      row.appendChild(col);
+
       const cardHotel = document.createElement("div");
       cardHotel.classList.add("card2");
-      cardHotel.innerHTML = `
-          <div class="card2-content">
-            <h41 class="card2-title">HOTEL:</h41><h14>${hotel.nombreHotel}<br></h14>
-            <h41 class="card2-title">PLAYA:</h41><h14>${hotel.playa}<br></h14>
-            <h41 class="card2-title">PRECIO x NOCHE:</h41><h14>${hotel.precioxnoche} MXN<br></h14>
-            <h41 class="card2-title">CONVENIO:</h41><h14>${hotel.convenio}<br></h14>
-    
-            <button type="button" class="btn btn-primary" onclick="addHotel('usuario', 'correo', '${hotel.playa}', '${hotel.nombreHotel}', '${hotel.precioxnoche}')">
-              Add to my trip!
-            </button>
+      col.appendChild(cardHotel);
 
-          </div>
-        `;
-      contenedorHoteles.appendChild(cardHotel);
+      const cardContent = document.createElement("div");
+      cardContent.classList.add("card2-content");
+      cardContent.innerHTML = `
+        <h4 class="card2-title">${hotelData.nombreHotel}</h4>
+        <p class="card2-subtitle">${hotelData.playa} - ${hotelData.convenio}</p>
+        <p class="card2-subtitle">Price per night: $ ${hotelData.precioxnoche} MXN</p>
+        <button type="button" class="btn btn-primary" id="addToTripBtn-${index}">
+          Add to my trip!
+        </button>
+      `;
+      cardHotel.appendChild(cardContent);
+
+      // Add event listener for the button click
+      const addToTripBtn = document.getElementById(`addToTripBtn-${index}`);
+      addToTripBtn.addEventListener("click", () => {
+        addHotel('usuario', 'correo', hotelData.playa, hotelData.nombreHotel, hotelData.precioxnoche);
+      });
     });
   } catch (error) {
     const container = document.createElement("div");
     container.classList.add("error");
-    container.innerHTML = "No hotels to show";
+    container.innerHTML = "An error occurred while fetching hotels.";
     contenedorHoteles.appendChild(container);
-    console.log(JSON.stringify(error));
+    console.error("An error occurred:", error.message);
   }
 })();
 

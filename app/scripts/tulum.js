@@ -3,7 +3,7 @@
     contenedorHoteles.innerHTML = "";
   
     try {
-      const res = await fetch("http://localhost:3000/hotels");
+      const res = await fetch("http://localhost:3000/hotels/Tulum");
       const hotelsData = await res.json();
   
       if (hotelsData.length === 0) {
@@ -24,7 +24,7 @@
   
       hotelsData.forEach((hotelData, index) => {
         const col = document.createElement("div");
-        col.classList.add("col-md-4"); // Adjusted from col-md-6 to col-md-4
+        col.classList.add("col-md-6");
         row.appendChild(col);
   
         const cardHotel = document.createElement("div");
@@ -57,7 +57,6 @@
       console.error("An error occurred:", error.message);
     }
   })();
-  
   
   async function addHotel(usuario, correo, playa, hotel, total) {
     const tile = document.createElement("div");
