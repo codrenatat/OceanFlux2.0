@@ -1,0 +1,61 @@
+###Prueba del GET de hotels
+GET http://localhost:3000/hotels
+
+GET http://localhost:3000/hotels/PlayadelCarmen
+
+###Prueba del POST de hotels
+POST http://localhost:3000/hotels
+Content-Type: application/json
+
+{
+    "nombreHotel": "hi",
+    "playa": "meko",
+    "precioxnoche": "123",
+    "convenio": "american"
+
+}
+
+###Prueba del GET de viajes
+GET http://localhost:3000/viajes
+
+###Prueba del POST de viajes
+POST http://localhost:3000/viajes
+Content-Type: application/json
+
+{
+    "usuario": "username",  
+    "correo": "user@example.com",  
+    "playa": "beach_name",
+    "hotel": "hotel_name",
+    "total": 2.0
+}
+
+###Prueba del GET de users
+GET http://localhost:3000/users
+
+###Prueba de GET con nombre de usuario
+GET http://localhost:3000/users/dorx
+
+###Prueba de GET con nombre de usuario
+GET http://localhost:3000/users/ren
+
+###Prueba de GET con nombre de usuario
+GET http://localhost:3000/users/username/lol
+
+###Prueba de GET con nombre de usuario
+GET http://localhost:3000/users/username/nose
+
+###Prueba del POST de users
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "nombre": "username",  
+    "correo": "user@example.com",  
+    "contrasenia": "lol",
+    "edad": 21,
+    "genero": "otro"
+}
+
+###Prueba de GET con nombre de usuario
+GET http://localhost:3000/admin
