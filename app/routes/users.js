@@ -50,7 +50,7 @@ router.post("/users", async(req, res) => {
             correo: req.body.correo,
             contrasenia: req.body.contrasenia,
             edad: req.body.edad,
-            genero: req.body.genero,      
+            genero: req.body.genero,
         });
         let usersSave = await newUser.save();
         res.status(201).json(usersSave);
@@ -83,21 +83,25 @@ router.post("/login", async (req, res) => {
 
 // Ruta para el registro de usuarios
 router.post("/register", async (req, res) => {
+    console.log("Datos recibidos en el servidor:", req.body);
     try {
-        const { nombre, correo, contrasenia, edad, genero } = req.body;
-
         let newUser = new usersModel({
-            nombre,
-            correo,
-            contrasenia,
-            edad,
-            genero,
+            nombre: req.body.nombre,
+            correo: req.body.correo,
+            contrasenia: usersModel.encryptarContrasenia(req.body.contrasenia),
+            edad: req.body.edad,
+            genero: req.body.genero,
         });
 
         let userSaved = await newUser.save();
         res.status(201).json(userSaved);
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        if (error.code === 11000) {
+            res.status(400).json({ error: "Correo ya registrado" });
+        } else {
+            console.error("Error al registrar:", error);
+            res.status(400).json({ error: error.message });
+        }
     }
 });
 

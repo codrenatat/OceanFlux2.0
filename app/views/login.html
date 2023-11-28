@@ -16,6 +16,8 @@
 				<!-- Header -->
 					<header id="header">
 						<div class="inner">
+							<div id="alertContainer"></div>
+
 
 							<!-- Logo -->
                                 <a href="index.html" class="logo">
@@ -50,21 +52,22 @@
 						<div class="inner">
 							<h1>Log In</h1>
 							<section>
-                                <form method="post" action="#">
-                                    <div class="row gtr-uniform">
-                                        <div class="col-12">
-                                            <input type="text" class="form-control" id="usuario" placeholder="Username" />
-                                        </div>
-                                        <div class="col-12">
-                                            <input type="password" class="form-control" id="password" placeholder="Password" />
-                                        </div>
+								<form method="post" action="#">
+									<div class="row gtr-uniform">
+										<div class="col-12">
+											<input type="text" class="form-control" id="usuario" name="usuario" placeholder="Username" />
+										</div>
+										<div class="col-12">
+											<input type="password" class="form-control" id="password" name="contrasenia" placeholder="Password" />
+										</div>
                                         <div class="col-12">
                                             <a href="register.html">If you don't have an account click here</a>
                                         </div>
                                         <div class="col-12">
                                             <ul class="actions">
 												<li>
-													<input type="submit" value="LogIn" class="primary" onclick="iniciarSesion()" />
+													<input id="loginButton" type="submit" value="LogIn" class="primary" />
+
 												</li>
 												<li>
 													<div id="loadingSpinner" class="spinner-border text-success" role="status" style="display: none;">
