@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>OceanFlux</title>
+    <link rel="icon" type="image/png" href="images/icons/icon.png">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+    <script src="https://kit.fontawesome.com/4167f19ec8.js" crossorigin="anonymous"></script>
+</head>
+<body class="is-preload">
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <!-- Header -->
+    <header id="header">
+        <div class="inner">
+            <div id="alertContainer"></div>
+
+
+            <!-- Logo -->
+            <a href="index.html" class="logo">
+                <span class="symbol"><img src="images/icons/icon.png" alt="" /></span><span class="title">OceanFlux</span>
+            </a>
+
+            <!-- Nav -->
+            <nav>
+                <ul>
+                    <li><a href="#menu">Menu</a></li>
+                </ul>
+            </nav>
+
+        </div>
+    </header>
+
+    <!-- Menu -->
+    <nav id="menu">
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="aboutus.html">About us</a></li>
+            <li><a href="hoteles.html">Hotels</a></li>
+            <li><a href="partners.html">Partners</a></li>
+            <li><a href="login.html"><i class="fa-solid fa-user"></i>LogIn</a></li>
+            <li><a href="misviajes.html"><i class="fa-solid fa-umbrella-beach"></i>My Trips</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main -->
+    <div id="main">
+        <div class="inner">
+            <h1>Administrator Log In</h1>
+            <section>
+                <form method="post" action="#">
+                    <div class="row gtr-uniform">
+                        <div class="col-12">
+                            <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Admin User" />
+                        </div>
+                        <div class="col-12">
+                            <input type="password" class="form-control" id="password" name="contrasenia" placeholder="Password" />
+                        </div>
+                        <div class="col-12">
+                            <ul class="actions">
+                                <li>
+                                    <input id="loginButton" type="submit" value="LogIn" class="primary" />
+
+                                </li>
+                                <li>
+                                    <div id="loadingSpinner" class="spinner-border text-success" role="status" style="display: none;">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="inner">
+            <section>
+                <h2>Get in touch</h2>
+
+            </section>
+            <section>
+                <h2>Follow</h2>
+
+            </section>
+            <ul class="copyright">
+                <li>&copy; OceanFlux. All rights reserved</li><li>Design: Renata, Yami, Francisco</li>
+            </ul>
+        </div>
+    </footer>
+
+</div>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="../scripts/adminLogin.js"></script>
+
+</body>
+</html>

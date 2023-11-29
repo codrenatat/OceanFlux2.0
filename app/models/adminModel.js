@@ -19,6 +19,10 @@ const adminSchema = new Schema({
   }
 });
 
+adminSchema.methods.compararContrasenia = function(contrasenia) {
+  return bcrypt.compareSync(contrasenia, this.contrasenia);
+};
+
 const AdminModel = model('Admin', adminSchema);
 
 module.exports = AdminModel;
