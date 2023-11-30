@@ -16,9 +16,11 @@
 				<!-- Header -->
 					<header id="header">
 						<div class="inner">
+							<div id="alertContainer"></div>
+
 
 							<!-- Logo -->
-                                <a href="index.html" class="logo">
+								<a href="indexlogin.html" class="logo">
                                     <span class="symbol"><img src="images/icons/icon.png" alt="" /></span><span class="title">OceanFlux</span>
                                 </a>
 
@@ -36,12 +38,10 @@
 					<nav id="menu">
 						<h2>Menu</h2>
 						<ul>
-							<li><a href="index.html">Home</a></li>
+							<li><a href="index2.html">Home</a></li>
 							<li><a href="aboutus.html">About us</a></li> 
-							<li><a href="hoteles.html">Hotels</a></li>
 							<li><a href="partners.html">Partners</a></li> 
-							<li><a href="login.html"><i class="fa-solid fa-user"></i>LogIn</a></li>
-							<li><a href="misviajes.html"><i class="fa-solid fa-umbrella-beach"></i>My Trips</a></li>
+							<li><a href="login.html"><i class="fa-solid fa-user"></i> Log In</a></li>
 						</ul>
 					</nav>
 
@@ -50,33 +50,35 @@
 						<div class="inner">
 							<h1>Log In</h1>
 							<section>
-                                <form method="post" action="#">
-                                    <div class="row gtr-uniform">
-                                        <div class="col-12">
-                                            <input type="text" class="form-control" id="usuario" placeholder="Username" />
-                                        </div>
-                                        <div class="col-12">
-                                            <input type="password" class="form-control" id="password" placeholder="Password" />
-                                        </div>
+								<form method="post" action="#">
+									<div class="row gtr-uniform">
+										<div class="col-12">
+											<input type="text" class="form-control" id="usuario" name="usuario" placeholder="Username" />
+										</div>
+										<div class="col-12">
+											<input type="password" class="form-control" id="password" name="contrasenia" placeholder="Password" />
+										</div>
                                         <div class="col-12">
                                             <a href="register.html">If you don't have an account click here</a>
                                         </div>
                                         <div class="col-12">
                                             <ul class="actions">
 												<li>
-													<input type="submit" value="LogIn" class="primary" onclick="iniciarSesion()" />
+													<input id="loginButton" type="submit" value="LogIn" class="primary" />
+
 												</li>
 												<li>
 													<div id="loadingSpinner" class="spinner-border text-success" role="status" style="display: none;">
 														<span class="sr-only">Loading...</span>
 													</div>
 												</li>
-												<li>
-													<input id="logoutButton" type="reset" value="LogOut" onclick="cerrarSesion()" />
-												</li>
+								
 											</ul>
 											
                                         </div>
+										<div class="col-12">
+											<a href="adminLog.html">¿Eres admin? Inicia sesión aquí</a>
+										</div>
                                     </div>
                                 </form>
                             </section>

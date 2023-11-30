@@ -154,4 +154,3 @@ async function obtenerYMostrarMisViajes() {
     console.error("Error al obtener mis viajes:", error);
   }
 }
-

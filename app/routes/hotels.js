@@ -44,4 +44,14 @@ router.post("/hotels", async (req, res) => {
   }
 });
 
+router.delete("/hotels/:id", async (req, res) => {
+  try {
+    const hotelId = req.params.id;
+    await hotelModel.findByIdAndDelete(hotelId);
+    res.status(200).json({ mensaje: "Hotel eliminado con éxito" });
+  } catch (error) {
+    res.status(500).send("Error al eliminar el hotel: " + error.message);
+  }
+});
+
 module.exports = router;

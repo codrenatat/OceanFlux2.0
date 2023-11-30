@@ -1,55 +1,50 @@
 $(document).ready(function() {
-    $("#loginButton").click(function() {
+    // Evento de envío de formulario de inicio de sesión
+    $("#loginButton").click(function(event) {
+        event.preventDefault();
         iniciarSesion();
     });
 
-    $("#signupButton").click(function() {
+    // Evento de envío de formulario de registro
+    $("#registerForm").submit(function(event) {
+        event.preventDefault();
         registrarUsuario();
     });
 });
 
+
 function iniciarSesion() {
-    console.log("Iniciando sesión...");
-    // Mostrar el spinner de carga
-    document.getElementById("loadingSpinner").style.display = "inline-block";
+    const usuario = $("#usuario").val();
+    const contrasenia = $("#password").val();
 
-    // Recolectar datos del formulario
-    const usuario = document.getElementById("usuario").value;
-    const contrasenia = document.getElementById("password").value;
-
-    // Enviar datos al servidor utilizando fetch
-    fetch("http://localhost:3000/login", {
-        method: "POST",
+    fetch('http://localhost:3000/login', {
+        method: 'POST',
         headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            usuario,
-            contrasenia,
-        }),
+        body: JSON.stringify({ usuario, contrasenia }),
     })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Inicio de sesión fallido');
+            }
+            return response.json();
+        })
         .then(data => {
-            console.log("Inicio de sesión exitoso:", data);
-
-            // Mostrar alerta de éxito
-            if (!data.errors) {
+            if (data.mensaje) {
+                mostrarAlerta("error", data.mensaje);
+            } else {
                 mostrarAlerta("success", "Inicio de sesión exitoso");
-
-                // Cambiar el texto de "Mi cuenta" al nombre de usuario
-                const nombreUsuario = data.nombre; // Asegúrate de que la respuesta del servidor incluya el nombre de usuario
-                cambiarTextoMiCuenta(nombreUsuario);
+                window.location.href = '../views/index.html'
+                cambiarTextoMiCuenta(usuario); // Asegúrate de que esta función y el elemento del DOM existan
             }
         })
         .catch(error => {
+            mostrarAlerta("error", "Error en el inicio de sesión");
             console.error("Error al iniciar sesión:", error);
-            // Mostrar alerta de error
-            mostrarAlerta("error", "Error al iniciar sesión");
-        })
-        .finally(() => {
-            document.getElementById("loadingSpinner").style.display = "none";
         });
 }
+
 
 function cambiarTextoMiCuenta(nombreUsuario) {
     // Cambiar el texto de "Mi cuenta" al nombre de usuario
@@ -58,14 +53,19 @@ function cambiarTextoMiCuenta(nombreUsuario) {
 
 function registrarUsuario() {
     console.log("Registro...");
-    document.getElementById("loadingS").style.display = "inline-block";
-    const nombre = document.getElementById("nombre").value;
-    const correo = document.getElementById("correo").value;
-    const contrasenia = document.getElementById("newpassword").value;
-    const edad = document.getElementById("edad").value;
-    const genero = document.getElementById("genero").value;
+    const nombre = $("#nombre").val();
+    const correo = $("#correo").val();
+    const contrasenia = $("#newpassword").val();
+    const edad = parseInt($("#edad").val(), 10); // Convierte edad a número
+    const genero = $("#genero").val();
 
-    // Enviar datos al servidor utilizando fetch
+    if (!nombre || !correo || !contrasenia || isNaN(edad) || !genero) {
+        mostrarAlerta("error", "Todos los campos son requeridos y la edad debe ser numérica");
+        return;
+    }
+
+    console.log("Datos enviados:", { nombre, correo, contrasenia, edad, genero });
+
     fetch("http://localhost:3000/register", {
         method: "POST",
         headers: {
@@ -79,24 +79,22 @@ function registrarUsuario() {
             genero,
         }),
     })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Usuario registrado con éxito:", data);
-
-            // Mostrar alerta de éxito
-            if (!data.errors) {
-                mostrarAlerta("success", "Usuario registrado con éxito");
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Registro fallido');
             }
+            return response.json();
+        })
+        .then(data => {
+            mostrarAlerta("success", "Usuario registrado con éxito");
+            // Aquí puedes redirigir al usuario o realizar otras acciones
         })
         .catch(error => {
-            console.error("Error al registrar usuario:", error);
-            // Mostrar alerta de error
             mostrarAlerta("error", "Error al registrar usuario");
-        })
-        .finally(() => {
-            document.getElementById("loadingS").style.display = "none";
+            console.error("Error al registrar usuario:", error);
         });
 }
+
 
 function cerrarSesion() {
     window.location.href = "intro.html";
@@ -115,4 +113,4 @@ function mostrarAlerta(type, message) {
     `;
 
     alertContainer.appendChild(alertElement);
-} 
+}

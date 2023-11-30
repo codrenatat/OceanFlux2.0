@@ -1,3 +1,16 @@
+const showAlert = (type, message) => {
+  const alertDiv = document.createElement("div");
+  alertDiv.classList.add("alert", `alert--${type}`);
+  alertDiv.innerHTML = `
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+      <strong>${type === "success" ? "Bien" : "Oops"}</strong> ${message}
+  `;
+
+  // Cambiado para agregar la alerta al contenedor de hoteles
+  const contenedorHoteles = document.getElementById("contenedor-hoteles");
+  contenedorHoteles.appendChild(alertDiv);
+};
+
 (async () => {
     const contenedorHoteles = document.getElementById("contenedor-hoteles");
     contenedorHoteles.innerHTML = "";
@@ -59,42 +72,25 @@
   })();
   
   async function addHotel(usuario, correo, playa, hotel, total) {
-    const tile = document.createElement("div");
     try {
-      const res = await fetch("http://localhost:3000/viajes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ usuario, correo, playa, hotel, total }),
-      });
-      const data = await res.json();
-      console.log(data);
-      if (!data.errors) {
-        tile.innerHTML = `
-          <div class="alert alert--success">
-            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-            <strong>Bien!</strong> Tu reservación se ha realizado con éxito
-          </div>
-        `;
-      } else {
-        tile.innerHTML = `
-          <div class="alert alert--danger">
-            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-            <strong>Oops!</strong> Hemos tenido un problema para agendar la reservación
-          </div>
-        `;
-      }
-      document.body.appendChild(tile);
+        const res = await fetch("http://localhost:3000/viajes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ usuario, correo, playa, hotel, total }),
+        });
+        const data = await res.json();
+  
+        if (!data.errors) {
+            showAlert("success", "Tu reservación se ha realizado con éxito");
+        } else {
+            showAlert("danger", "Hemos tenido un problema para agendar la reservación");
+        }
     } catch (error) {
-      tile.innerHTML = `
-        <div class="alert alert--danger">
-          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-          <strong>Oops!</strong> Hemos tenido un problema para agendar la reservación
-        </div>
-      `;
-      document.body.appendChild(tile);
-      console.error("ERROR!!!", JSON.stringify(error));
+        showAlert("danger", "Hemos tenido un problema para agendar la reservación");
+        console.error("ERROR!!!", JSON.stringify(error));
     }
   }
+  
   

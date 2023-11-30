@@ -22,15 +22,15 @@ const usersSchema = new Schema({
     },
     genero: {
         type: String,
-        enum: ['hombre', 'mujer', 'otro', 'prefiero-no-decirlo'],
+        enum: ['Masculine', 'Feminine', 'Other'],
         required: true
     }
 });
 
-usersSchema.methods.encryptarContrasenia = (contrasenia)=>{
-    let hash = bcrypt.hashSync(contrasenia,10);
-    return hash;
-}
+usersSchema.statics.encryptarContrasenia = function(contrasenia) {
+    return bcrypt.hashSync(contrasenia, 10);
+};
+
 
 usersSchema.methods.compararContrasenia = function(contrasenia){
     return bcrypt.compareSync(contrasenia,this.contrasenia);

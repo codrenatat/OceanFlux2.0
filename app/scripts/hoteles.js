@@ -1,3 +1,4 @@
+// Solicitud GET para obtener la lista de los hoteles
 (async () => {
     const contenedorHoteles = document.getElementById("contenedor-hoteles");
     contenedorHoteles.innerHTML = "";
@@ -5,14 +6,6 @@
     try {
       const res = await fetch("http://localhost:3000/hotels");
       const hotelsData = await res.json();
-  
-      if (hotelsData.length === 0) {
-        const container = document.createElement("div");
-        container.classList.add("error");
-        container.innerHTML = "No hotels to show";
-        contenedorHoteles.appendChild(container);
-        return;
-      }
   
       const container = document.createElement("div");
       container.classList.add("container");
@@ -22,7 +15,7 @@
       row.classList.add("row");
       container.appendChild(row);
   
-      hotelsData.forEach((hotelData, index) => {
+      hotelsData.forEach((hotelData) => {
         const col = document.createElement("div");
         col.classList.add("col-md-4");
         row.appendChild(col);
@@ -34,17 +27,16 @@
         const cardContent = document.createElement("div");
         cardContent.classList.add("card2-content");
         cardContent.innerHTML = `
-          <h4 class="card2-title">${hotelData.nombreHotel}</h4>
-          <p class="card2-subtitle">${hotelData.playa} - ${hotelData.convenio}</p>
-          <p class="card2-subtitle">Price per night: $ ${hotelData.precioxnoche} MXN</p>
-          <button type="button" class="btn btn-primary" id="addToTripBtn-${index}">
-            Add to my trip!
-          </button>
-        `;
+                  <h4 class="card2-title">${hotelData.nombreHotel}</h4>
+                  <p class="card2-subtitle">${hotelData.playa} - ${hotelData.convenio.join(", ")}</p>
+                  <p class="card2-subtitle">Price per night: $ ${hotelData.precioxnoche} MXN</p>
+                  <button type="button" class="btn btn-primary" id="addToTripBtn-${hotelData._id}">
+                      Add to my trip!
+                  </button>
+              `;
         cardHotel.appendChild(cardContent);
   
-        // Add event listener for the button click
-        const addToTripBtn = document.getElementById(`addToTripBtn-${index}`);
+        const addToTripBtn = document.getElementById(`addToTripBtn-${hotelData._id}`);
         addToTripBtn.addEventListener("click", () => {
           addHotel('usuario', 'correo', hotelData.playa, hotelData.nombreHotel, hotelData.precioxnoche);
         });
@@ -52,15 +44,30 @@
     } catch (error) {
       const container = document.createElement("div");
       container.classList.add("error");
-      container.innerHTML = "An error occurred while fetching hotels.";
+      container.innerHTML = "No hotels to show";
       contenedorHoteles.appendChild(container);
-      console.error("An error occurred:", error.message);
+      console.log(JSON.stringify(error));
     }
   })();
+    
   
-
+    //funcion para agregar un hotel al viaje
+  // Función para mostrar alertas
+  const showAlert = (type, message) => {
+    const alertDiv = document.createElement("div");
+    alertDiv.classList.add("alert", `alert--${type}`);
+    alertDiv.innerHTML = `
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+        <strong>${type === "success" ? "Bien" : "Oops"}</strong> ${message}
+    `;
+  
+    // Cambiado para agregar la alerta al contenedor de hoteles
+    const contenedorHoteles = document.getElementById("contenedor-hoteles");
+    contenedorHoteles.appendChild(alertDiv);
+  };
+  
+  // Función para agregar un hotel al viaje
   async function addHotel(usuario, correo, playa, hotel, total) {
-    const tile = document.createElement("div");
     try {
       const res = await fetch("http://localhost:3000/viajes", {
         method: "POST",
@@ -72,32 +79,29 @@
       const data = await res.json();
   
       if (!data.errors) {
-        tile.innerHTML = `
-          <div class="alert alert-success">
-            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-            <strong>Bien!</strong> Tu reservación se ha realizado con éxito
-          </div>
-        `;
+        showAlert("success", "Tu reservación se ha realizado con éxito");
       } else {
-        tile.innerHTML = `
-          <div class="alert alert-danger">
-            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-            <strong>Oops!</strong> Hemos tenido un problema para agendar la reservación
-          </div>
-        `;
+        showAlert("danger", "Hemos tenido un problema para agendar la reservación");
       }
-  
-      document.body.appendChild(tile);
     } catch (error) {
-      tile.innerHTML = `
-        <div class="alert alert-danger">
-          <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
-          <strong>Oops!</strong> Hemos tenido un problema para agendar la reservación
-        </div>
-      `;
-      document.body.appendChild(tile);
+      showAlert("danger", "Hemos tenido un problema para agendar la reservación");
       console.error("ERROR!!!", JSON.stringify(error));
     }
   }
   
-  
+  async function borrarHotel(hotelId, colElement) {
+    try {
+      const response = await fetch(`http://localhost:3000/hotels/${hotelId}`, {
+        method: 'DELETE'
+      });
+      const data = await response.json();
+      if (response.ok) {
+        colElement.remove();
+        console.log(data.mensaje);
+      } else {
+        throw new Error(data.mensaje);
+      }
+    } catch (error) {
+      console.error("Error al borrar el hotel: ", error);
+    }
+  }

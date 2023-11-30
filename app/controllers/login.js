@@ -28,17 +28,18 @@ function iniciarSesion() {
             contrasenia,
         }),
     })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Inicio de sesión exitoso:", data);
+    .then(response => response.json())
+    .then(data => {
+        console.log("Inicio de sesión exitoso:", data);
 
-            // Mostrar alerta de éxito
-            if (!data.errors) {
-                mostrarAlerta("success", "Inicio de sesión exitoso");
+        // Mostrar alerta de éxito
+        if (!data.errors) {
+            mostrarAlerta("success", "Inicio de sesión exitoso");
 
-                // Cambiar el texto de "Mi cuenta" al nombre de usuario
-                const nombreUsuario = data.nombre; // Asegúrate de que la respuesta del servidor incluya el nombre de usuario
-                cambiarTextoMiCuenta(nombreUsuario);
+            // Cambiar el texto de "Mi cuenta" al nombre de usuario
+            const nombreUsuario = data.nombre; // Asegúrate de que la respuesta del servidor incluya el nombre de usuario
+            cambiarTextoMiCuenta(nombreUsuario);
+            document.getElementById("logoutButton").style.display = "inline-block";
             }
         })
         .catch(error => {
